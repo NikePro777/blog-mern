@@ -11,12 +11,7 @@ datasource db {
 }
 
 model User {
-  id  Int @id @default(autoincrement())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  email String @unique
-  fillName String
-  password String
-  images String[]
+  id Int @default(autoincrement()) @id
+  title String
+  discription String?
 }
