@@ -19,16 +19,8 @@ const app = express();
 
 app.use(express.json()); // Важная штука, чтобы все запросы приходили и уходили в формате json
 
-app.post(
-  "/auth/register",
-  registerValidation,
-  async (req, res) => {
-    // const token = jwt.sign(
-    //   { email: req.body.email, fullName: "Вася Пупкин" },
-    //   "secret123"
-    // );
-    // т.е. мы зашифровали в токен информацию, которая будет передаваться (почта и полное имя) по слову секрет123 (тут любое слово и что угодно м.б.)
-
+app.post("/auth/register", registerValidation, async (req, res) => {
+  try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json(errors.array());
@@ -47,22 +39,17 @@ app.post(
         passwordHash: passwordHash,
       },
     });
-    console.log(user);
-    res.json(user);
-    await client.$disconnect();
 
-    // const user = await client.user.create({
-    //   data: {
-    //     fullName: "Bob",
-    //     email: "bob@prisma.io",
-    //     passwordHash: "Hello World",
-    //     avatarUrl: "Bob",
-    //   },
-    // });
-    // console.log(user);
+    const token = jwt.sign({ id: user.id }, "secret123", { expiresIn: "30d" });
+    // т.е. мы зашифровали в токен информацию, которая будет передаваться (почта и полное имя) по слову секрет123 (тут любое слово и что угодно м.б.), который перестанет действовать чз 30 дней
+
+    res.json({ ...user, token });
+    await client.$disconnect();
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Не удалось зарегистрироваться" });
   }
-  // }
-);
+});
 
 app.listen(4444, (err) => {
   if (err) {
