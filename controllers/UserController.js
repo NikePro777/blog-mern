@@ -82,7 +82,6 @@ export const login = async (req, res) => {
 
 export const getMe = async (req, res) => {
   try {
-    console.log(req.userId);
     const user = await client.user.findUnique({
       where: {
         id: req.userId,
