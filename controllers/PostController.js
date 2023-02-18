@@ -26,10 +26,27 @@ export const getOne = async (req, res) => {
         },
       },
     });
+
     res.json(post);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Не удалось получить статю" });
+    res.status(500).json({ message: "Не удалось получить статью" });
+  }
+};
+
+export const remove = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const post = await client.post.delete({
+      where: {
+        id: Number(postId),
+      },
+    });
+
+    res.json({ message: "mission complete" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Невозможно удалить то чего нет" });
   }
 };
 
@@ -48,5 +65,30 @@ export const create = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Не удалось создать статью" });
+  }
+};
+
+export const update = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const post = await client.post.update({
+      where: {
+        id: Number(postId),
+      },
+      data: {
+        title: req.body.title,
+        text: req.body.text,
+        imageUrl: req.body.imageUrl ? req.body.imageUrl : "",
+        tags: req.body.tags ? req.body.tags.toString() : "",
+        // user: { connect: { id: req.userId } },
+      },
+    });
+
+    res.json({
+      success: true,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Не удалось обновить статью" });
   }
 };
