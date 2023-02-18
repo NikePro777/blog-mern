@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { PostFields } from "../utils/post.utils.js";
 
 const client = new PrismaClient();
 
@@ -71,7 +70,7 @@ export const create = async (req, res) => {
 export const update = async (req, res) => {
   try {
     const postId = req.params.id;
-    const post = await client.post.update({
+    await client.post.update({
       where: {
         id: Number(postId),
       },

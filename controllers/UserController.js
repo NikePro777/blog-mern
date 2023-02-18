@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { validationResult } from "express-validator";
 import { UserFields } from "../utils/user.utils.js";
 import { PrismaClient } from "@prisma/client";
 
@@ -8,11 +7,6 @@ const client = new PrismaClient();
 
 export const register = async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json(errors.array());
-    } // если список ошибок не пуст, то вернем неверный запрос (400) с перечнем ошибок
-
     const password = req.body.password;
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
