@@ -15,6 +15,6 @@ export const loginValidation = [
 export const postCreateValidation = [
   body("title", "Введите заголовок статьи").isLength({ min: 3 }).isString(),
   body("text", "Введите текст статьи").isLength({ min: 3 }).isString(),
-  body("tags", "Неверный формат тэгов (укажите массив)").optional().isArray(),
+  body("tags", "Неверный формат тэгов (укажите строку)").optional().isArray(),
   body("imageUrl", "неверная ссылка на изображение").optional().isString(),
 ];
