@@ -5,11 +5,9 @@ import {
   loginValidation,
   postCreateValidation,
 } from "./validation.js";
-import checkAuth from "./utils/checkAuth.js";
-import * as UserController from "./controllers/UserController.js";
-import * as PostController from "./controllers/PostController.js";
+import { handleValidationsErrors, checkAuth } from "./utils/index.js";
+import { UserController, PostController } from "./controllers/index.js";
 import multer from "multer";
-import handleValidationsErrors from "./utils/handleValidationsErrors.js";
 
 const client = new PrismaClient();
 await client
