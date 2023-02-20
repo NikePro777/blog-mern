@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import express from "express";
+import cors from "cors";
 import {
   registerValidation,
   loginValidation,
@@ -36,6 +37,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage }); // есть функция аплоад и у него есть вот такое вот хранилище
 
 app.use(express.json()); // Важная штука, чтобы все запросы приходили и уходили в формате json
+app.use(cors()); // отключаем политику CORS для нашего бэка
 app.use("/uploads", express.static("uploads")); // когда запрос придет на роут /uploads экспресс проверяет в папке , есть ли такой файл и выдает
 // крч папка uploads это статическое хранилище данных
 
