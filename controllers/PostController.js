@@ -2,6 +2,19 @@ import { PrismaClient } from "@prisma/client";
 
 const client = new PrismaClient();
 
+export const getLastTags = async (req, res) => {
+  try {
+    const posts = await client.post.findMany({
+      take: 5,
+    });
+    const tags = posts.map((post) => post.tags);
+    res.json(tags);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Не удалось получить tags" });
+  }
+};
+
 export const getAll = async (req, res) => {
   try {
     const posts = await client.post.findMany();
