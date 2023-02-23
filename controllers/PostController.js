@@ -7,7 +7,7 @@ export const getLastTags = async (req, res) => {
     const posts = await client.post.findMany({
       take: 5,
     });
-    const tags = posts.map((post) => post.tags);
+    const tags = posts.map((post) => post.tags.split(","));
     res.json(tags);
   } catch (err) {
     console.log(err);
