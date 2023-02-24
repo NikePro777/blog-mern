@@ -28,6 +28,7 @@ export const getAll = async (req, res) => {
 export const getOne = async (req, res) => {
   try {
     const postId = req.params.id;
+
     const post = await client.post.update({
       where: {
         id: Number(postId),
