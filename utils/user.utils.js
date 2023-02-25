@@ -1,7 +1,7 @@
 export const UserFields = {
-  title: true,
-  text: true,
-  tags: true,
-  imageUrl: true,
-  user: true,
+  id: true,
+  email: true,
+  avatarUrl: true,
+  updatedAt: true,
+  fullName: true,
 };
