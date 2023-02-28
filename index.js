@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
+import fs from "fs";
 import cors from "cors";
 import {
   registerValidation,
@@ -26,6 +27,11 @@ const app = express();
 const storage = multer.diskStorage({
   // функция которая ждет параметры, куда сохранять , что сохранять и колбек. На все забиваем пишем только колбек
   destination: (_, __, cb) => {
+    // если папка аплоадс не создана- создаем ее
+    if (!fs.existsSync("uploads")) {
+      fs.mkdirSync("uploads");
+    }
+
     // функция не должна получить ошибки и все что есть должна сохранить в папку uploads
     cb(null, "uploads");
   }, // как будет называться файл? обьясняем что хотим вытащить оригинальное название
